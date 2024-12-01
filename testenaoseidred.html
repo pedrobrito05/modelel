@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Link Redirect</title>
+</head>
+<body>
+	<h1>Link Redirect</h1>
+	<a href="https://www.google.com">Google</a>
+	<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="preview-btn">Rick Astley - Never Gonna Give You Up</a>
+
+	<script>
+	    const previewBtns = document.querySelectorAll('.preview-btn');
+	    const previewModal = document.createElement('div');
+	    const previewFrame = document.createElement('iframe');
+	    const closeBtn = document.createElement('button');
+
+	    // Styling for the preview modal
+	    previewFrame.style.margin = 'auto';
+	    previewModal.style.position = 'fixed';
+	    previewModal.style.top = '0';
+	    previewModal.style.left = '0';
+	    previewModal.style.width = '100%';
+	    previewModal.style.height = '100%';
+	    previewModal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+	    previewModal.style.display = 'none';
+	    previewModal.style.zIndex = '9999';
+	    previewModal.style.display = 'flex'; // center horizontally
+	    previewModal.style.justifyContent = 'center'; // center horizontally
+	    previewFrame.style.width = '90vw';
+	    previewFrame.style.height = '80vh';
+	    previewFrame.style.display = 'block';
+	    previewFrame.style.border = 'none';
+	    previewFrame.style.margin = 'auto';
+	    previewFrame.style.marginTop = '5vh';
+	    previewFrame.style.position = 'relative';
+	    closeBtn.style.position = 'absolute';
+	    closeBtn.style.top = '2vh';
+	    closeBtn.style.right = '2vh';
+	    closeBtn.style.padding = '0.5rem';
+	    closeBtn.style.fontSize = '1.2rem';
+	    closeBtn.style.borderRadius = '50%';
+	    closeBtn.style.backgroundColor = '#fff';
+	    closeBtn.style.color = '#000';
+	    closeBtn.style.border = 'none';
+	    closeBtn.style.cursor = 'pointer';
+	    closeBtn.textContent = 'X';
+
+	    // Add the preview frame and close button to the preview modal
+	    previewModal.appendChild(previewFrame);
+	    previewModal.appendChild(closeBtn);
+	    document.body.appendChild(previewModal);
+
+	    previewBtns.forEach(btn => {
+	        btn.addEventListener('click', e => {
+	            e.preventDefault();
+	            const src = e.currentTarget.getAttribute('data-src');
+	            previewFrame.setAttribute('src', src);
+	            previewModal.style.display = 'flex'; // center horizontally
+	            previewModal.style.justifyContent = 'center'; // center horizontally
+	        });
+	    });
+
+	    // Add an event listener to all links that are not in the .preview-btn class
+	    document.querySelectorAll('a:not(.preview-btn)').forEach(link => {
+	    	link.addEventListener('click', (e) => {
+	    		e.preventDefault();
+	    		const href = e.currentTarget.getAttribute('href');
+	    		window.location.href = href;
+	    	});
+	    });
+
+	    closeBtn.addEventListener('click', () => {
+	        previewModal.style.display = 'none';
+	        previewFrame.setAttribute('src', '');
+	    });
+
+	</script>
+</body>
+</html>
